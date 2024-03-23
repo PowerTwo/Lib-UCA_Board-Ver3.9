@@ -1,0 +1,26 @@
+function decodeUplink(input) {
+  temperature = input.bytes[1] + "." + input.bytes[0]
+  humidity = input.bytes[2]
+  
+  return {
+    data: {
+      temperature: parseFloat(temperature),
+      humidity: parseFloat(humidity),
+    },
+    warnings: [],
+    errors: []
+  };
+}
+
+function encodeNumber(number) {
+  // Chuyển đổi số thành chuỗi nhị phân
+  const binaryString = number.toString(2);
+
+  // Chèn các số 0 vào đầu chuỗi nhị phân để đảm bảo đủ 8 bit
+  const paddedBinaryString = '0'.repeat(8 - binaryString.length) + binaryString;
+
+  // Chia chuỗi nhị phân thành hai phần
+  const part = paddedBinaryString.substring(0, 8);
+
+  return part;
+}
